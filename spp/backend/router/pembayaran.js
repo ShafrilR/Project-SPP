@@ -7,11 +7,15 @@ const md5 = require('md5')
 // memanggil model
 const pembayaran = require('../models/index').pembayaran
 
+// memanggil verify agar bisa digunakan
+const verifyPetugas = require('./verifyPetugas')
+const verifySiswa = require('./verifySiswa')
+
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', async (req,res) =>{
+app.get('/',  async (req,res) =>{
     pembayaran.findAll({
         include: [{all:true, nested: true}]
     })
@@ -26,7 +30,7 @@ app.get('/', async (req,res) =>{
 })
 
 // POST
-app.post('/', async (req, res) => {
+app.post('/', verifyPetugas, async (req, res) => {
     let data = {
         id_petugas: req.body.id_petugas,
         nisn: req.body.nisn,
@@ -51,7 +55,7 @@ app.post('/', async (req, res) => {
 })
 
 // PUT
-app.put('/', async (req, res) => {
+app.put('/', verifyPetugas, async (req, res) => {
     let param = { id_pembayaran: req.body.id_pembayaran }
     let data = {
         id_petugas: req.body.id_petugas,
@@ -77,7 +81,7 @@ app.put('/', async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_pembayaran', async (req, res) => {
+app.delete('/:id_pembayaran', verifyPetugas, async (req, res) => {
     let param = { id_pembayaran: req.params.id_pembayaran }
     pembayaran.destroy({where:param})
     .then(result => {

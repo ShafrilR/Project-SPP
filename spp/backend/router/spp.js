@@ -7,11 +7,14 @@ const md5 = require('md5')
 // memanggil model
 const spp = require('../models/index').spp
 
+// memanggil verifyPetugas agar bisa digunakan
+const verifyPetugas = require('./verifyPetugas')
+
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', async (req,res) =>{
+app.get('/', verifyPetugas, async (req,res) =>{
     spp.findAll({
         include: [{all:true, nested: true}]
     })
@@ -26,7 +29,7 @@ app.get('/', async (req,res) =>{
 })
 
 // POST
-app.post('/', async (req, res) => {
+app.post('/', verifyPetugas, async (req, res) => {
     let data = {
         tahun: req.body.tahun,
         nominal: req.body.nominal
@@ -46,7 +49,7 @@ app.post('/', async (req, res) => {
 })
 
 // PUT
-app.put('/', async (req, res) => {
+app.put('/', verifyPetugas, async (req, res) => {
     let param = { id_spp: req.body.id_spp }
     let data = {
         tahun: req.body.tahun,
@@ -67,7 +70,7 @@ app.put('/', async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_spp', async (req, res) => {
+app.delete('/:id_spp', verifyPetugas, async (req, res) => {
     let param = { id_spp: req.params.id_spp }
     spp.destroy({where:param})
     .then(result => {
