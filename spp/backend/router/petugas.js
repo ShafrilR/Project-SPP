@@ -9,6 +9,7 @@ const petugas = require('../models/index').petugas
 
 // memanggil verifyPetugas agar bisa digunakan
 const verifyPetugas = require('./verifyPetugas')
+const verifyAdmin = require('./verifyAdmin')
 
 // use app
 app.use(express.urlencoded({ extended:true }))

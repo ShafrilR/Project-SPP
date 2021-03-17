@@ -9,7 +9,7 @@ const pembayaran = require('../models/index').pembayaran
 
 // memanggil verify agar bisa digunakan
 const verifyPetugas = require('./verifyPetugas')
-const verifySiswa = require('./verifySiswa')
+// const verifySiswa = require('./verifySiswa')
 
 // use app
 app.use(express.urlencoded({ extended:true }))

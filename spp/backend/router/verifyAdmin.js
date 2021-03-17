@@ -1,6 +1,6 @@
 // const jwt = require("jsonwebtoken")
 
-// verifySiswa = (req, res, next) => {
+// verifyAdmin = (req, res, next) => {
 //     let headers = req.headers.authorization
 //     let token = null
 
@@ -20,7 +20,7 @@
 //             algorithm: "HS256"
 //         }
 
-//         let secretKey = "LoginSiswa"
+//         let secretKey = "LoginAdmin"
 
 //         jwt.verify(token, secretKey, jwtHeader, err => {
 //             if(err){
@@ -34,4 +34,4 @@
 //     }
 // }
 
-// module.exports = verifySiswa
+// module.exports = verifyAdmin
