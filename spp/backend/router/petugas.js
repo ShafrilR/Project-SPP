@@ -3,19 +3,19 @@ const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
 const md5 = require('md5')
+app.use(express.json())
 
 // memanggil model
 const petugas = require('../models/index').petugas
 
-// memanggil verifyPetugas agar bisa digunakan
-const verifyPetugas = require('./verifyPetugas')
-const verifyAdmin = require('./verifyAdmin')
+// memanggil verifyToken agar bisa digunakan
+const verifyToken = require('./verifyToken')
 
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', verifyPetugas, async (req,res) =>{
+app.get('/', verifyToken, async (req,res) =>{
     petugas.findAll({
         include: [{all:true, nested: true}]
     })
@@ -30,7 +30,7 @@ app.get('/', verifyPetugas, async (req,res) =>{
 })
 
 // POST
-app.post('/', verifyPetugas, async (req, res) => {
+app.post('/', verifyToken, async (req, res) => {
     let data = {
         username: req.body.username,
         password: md5(req.body.password),
@@ -52,7 +52,7 @@ app.post('/', verifyPetugas, async (req, res) => {
 })
 
 // PUT
-app.put('/', verifyPetugas, async (req, res) => {
+app.put('/', verifyToken, async (req, res) => {
     let param = { id_petugas: req.body.id_petugas }
     let data = {
         username: req.body.username,
@@ -75,7 +75,7 @@ app.put('/', verifyPetugas, async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_petugas', verifyPetugas, async (req, res) => {
+app.delete('/:id_petugas', verifyToken, async (req, res) => {
     let param = { id_petugas: req.params.id_petugas }
     petugas.destroy({where:param})
     .then(result => {

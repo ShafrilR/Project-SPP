@@ -25,7 +25,9 @@ module.exports = {
         }
       },
       tgl_bayar: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
+        autoIncrement: true
       },
       bulan_dibayar: {
         type: Sequelize.STRING

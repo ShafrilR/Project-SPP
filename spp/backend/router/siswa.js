@@ -3,18 +3,19 @@ const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
 const md5 = require('md5')
+app.use(express.json())
 
 // memanggil model
 const siswa = require('../models/index').siswa
 
-// memanggil verifyPetugas agar bisa digunakan
-const verifyPetugas = require('./verifyPetugas')
+// memanggil verifyToken agar bisa digunakan
+const verifyToken = require('./verifyToken')
 
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', verifyPetugas, async (req,res) =>{
+app.get('/', verifyToken, async (req,res) =>{
     siswa.findAll({
         include: [{all:true, nested: true}]
     })
@@ -29,12 +30,11 @@ app.get('/', verifyPetugas, async (req,res) =>{
 })
 
 // POST
-app.post('/', verifyPetugas, async (req, res) => {
+app.post('/', verifyToken, async (req, res) => {
     let data = {
         nis: req.body.nis,
         nama: req.body.nama,
         id_kelas: req.body.id_kelas,
-        alamat: req.body.alamat,
         alamat: req.body.alamat,
         no_telp: req.body.no_telp,
         id_spp: req.body.id_spp
@@ -54,7 +54,7 @@ app.post('/', verifyPetugas, async (req, res) => {
 })
 
 // PUT
-app.put('/', verifyPetugas, async (req, res) => {
+app.put('/', verifyToken, async (req, res) => {
     let param = { nisn: req.body.nisn }
     let data = {
         nis: req.body.nis,
@@ -80,7 +80,7 @@ app.put('/', verifyPetugas, async (req, res) => {
 })
 
 // DELETE
-app.delete('/:nisn', verifyPetugas, async (req, res) => {
+app.delete('/:nisn', verifyToken, async (req, res) => {
     let param = { nisn: req.params.nisn }
     siswa.destroy({where:param})
     .then(result => {

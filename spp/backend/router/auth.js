@@ -79,37 +79,4 @@ app.post("/loginadmin", async (req, res) => {
     }
 })
 
-// // auth siswa
-// app.post("/loginsiswa", async (req, res) => {
-//     let parameter = {
-//         nama: req.body.nama,
-//         nis: req.body.nis
-//     }
-
-//     let result = await siswa.findOne({where: parameter})
-//     if(result === null){
-//         // invalid username or password
-//         res.json({
-//             message: "Siswa not Found"
-//         })
-//     }else{
-//         // login success
-//         // generate token using jwt
-//         // jwt->header, payload, secretKey
-//         let jwtHeader = {
-//             algorithm: "HS256",
-//             expiresIn: "1h"
-//         }
-
-//         let payload = {data: result}
-//         let secretKey = "LoginSiswa"
-
-//         let token = jwt.sign(payload, secretKey, jwtHeader)
-//         res.json({
-//             data: result,
-//             token: token
-//         })
-//     }
-// })
-
 module.exports = app

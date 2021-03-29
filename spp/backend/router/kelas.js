@@ -2,20 +2,20 @@
 const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
-const md5 = require('md5')
+app.use(express.json())
 
 // memanggil model
 const kelas = require('../models/index').kelas
 
-// memanggil verifyPetugas agar bisa digunakan
-const verifyPetugas = require('./verifyPetugas')
+// memanggil verifyToken agar bisa digunakan
+const verifyToken = require('./verifyToken')
 
 
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', verifyPetugas, async (req,res) =>{
+app.get('/', verifyToken, async (req,res) =>{
     kelas.findAll({
         include: [{all:true, nested: true}]
     })
@@ -30,7 +30,7 @@ app.get('/', verifyPetugas, async (req,res) =>{
 })
 
 // POST
-app.post('/', verifyPetugas, async (req, res) => {
+app.post('/', verifyToken, async (req, res) => {
     let data = {
         nama_kelas: req.body.nama_kelas,
         kompetensi_keahlian: req.body.kompetensi_keahlian
@@ -50,7 +50,7 @@ app.post('/', verifyPetugas, async (req, res) => {
 })
 
 // PUT
-app.put('/', verifyPetugas, async (req, res) => {
+app.put('/', verifyToken, async (req, res) => {
     let param = { id_kelas: req.body.id_kelas }
     let data = {
         nama_kelas: req.body.nama_kelas,
@@ -71,7 +71,7 @@ app.put('/', verifyPetugas, async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_kelas', verifyPetugas, async (req, res) => {
+app.delete('/:id_kelas', verifyToken, async (req, res) => {
     let param = { id_kelas: req.params.id_kelas }
     kelas.destroy({where:param})
     .then(result => {

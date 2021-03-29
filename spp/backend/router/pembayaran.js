@@ -3,13 +3,15 @@ const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
 const md5 = require('md5')
+app.use(express.json())
+
+let date = new Date()
 
 // memanggil model
 const pembayaran = require('../models/index').pembayaran
 
 // memanggil verify agar bisa digunakan
-const verifyPetugas = require('./verifyPetugas')
-// const verifySiswa = require('./verifySiswa')
+const verifyToken = require('./verifyToken')
 
 // use app
 app.use(express.urlencoded({ extended:true }))
@@ -30,11 +32,11 @@ app.get('/',  async (req,res) =>{
 })
 
 // POST
-app.post('/', verifyPetugas, async (req, res) => {
+app.post('/', verifyToken, async (req, res) => {
     let data = {
         id_petugas: req.body.id_petugas,
         nisn: req.body.nisn,
-        tgl_bayar: req.body.tgl_bayar,
+        tgl_bayar: date,
         bulan_dibayar: req.body.bulan_dibayar,
         tahun_dibayar: req.body.tahun_dibayar,
         id_spp: req.body.id_spp,
@@ -55,7 +57,7 @@ app.post('/', verifyPetugas, async (req, res) => {
 })
 
 // PUT
-app.put('/', verifyPetugas, async (req, res) => {
+app.put('/', verifyToken, async (req, res) => {
     let param = { id_pembayaran: req.body.id_pembayaran }
     let data = {
         id_petugas: req.body.id_petugas,
@@ -81,7 +83,7 @@ app.put('/', verifyPetugas, async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_pembayaran', verifyPetugas, async (req, res) => {
+app.delete('/:id_pembayaran', verifyToken, async (req, res) => {
     let param = { id_pembayaran: req.params.id_pembayaran }
     pembayaran.destroy({where:param})
     .then(result => {

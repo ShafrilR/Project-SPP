@@ -8,7 +8,7 @@ class Navbar extends React.Component{
     }
     render(){
         return(
-            <div className="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div className="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
                 <a className="navbar-brand">
                     Telkom School Malang
                 </a>
@@ -41,13 +41,8 @@ class Navbar extends React.Component{
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/spp" className="nav-link">
-                                SPP
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/transaksi" className="nav-link">
-                                Transaksi
+                            <Link to="/pembayaran" className="nav-link">
+                                Pembayaran SPP
                             </Link>
                         </li>
                         <li className="nav-item">

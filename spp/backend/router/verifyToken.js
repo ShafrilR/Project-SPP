@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-verifyPetugas = (req, res, next) => {
+verifyToken = (req, res, next) => {
     let headers = req.headers.authorization
     let token = null
 
@@ -34,4 +34,4 @@ verifyPetugas = (req, res, next) => {
     }
 }
 
-module.exports = verifyPetugas
+module.exports = verifyToken

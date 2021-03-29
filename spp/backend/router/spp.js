@@ -3,18 +3,18 @@ const { urlencoded } = require('express')
 const express = require('express')
 const app = express()
 const md5 = require('md5')
-
+app.use(express.json())
 // memanggil model
 const spp = require('../models/index').spp
 
-// memanggil verifyPetugas agar bisa digunakan
-const verifyPetugas = require('./verifyPetugas')
+// memanggil verifyToken agar bisa digunakan
+const verifyToken = require('./verifyToken')
 
 // use app
 app.use(express.urlencoded({ extended:true }))
 
 // GET
-app.get('/', verifyPetugas, async (req,res) =>{
+app.get('/', verifyToken, async (req,res) =>{
     spp.findAll({
         include: [{all:true, nested: true}]
     })
@@ -29,7 +29,7 @@ app.get('/', verifyPetugas, async (req,res) =>{
 })
 
 // POST
-app.post('/', verifyPetugas, async (req, res) => {
+app.post('/', verifyToken, async (req, res) => {
     let data = {
         tahun: req.body.tahun,
         nominal: req.body.nominal
@@ -49,7 +49,7 @@ app.post('/', verifyPetugas, async (req, res) => {
 })
 
 // PUT
-app.put('/', verifyPetugas, async (req, res) => {
+app.put('/', verifyToken, async (req, res) => {
     let param = { id_spp: req.body.id_spp }
     let data = {
         tahun: req.body.tahun,
@@ -70,7 +70,7 @@ app.put('/', verifyPetugas, async (req, res) => {
 })
 
 // DELETE
-app.delete('/:id_spp', verifyPetugas, async (req, res) => {
+app.delete('/:id_spp', verifyToken, async (req, res) => {
     let param = { id_spp: req.params.id_spp }
     spp.destroy({where:param})
     .then(result => {
