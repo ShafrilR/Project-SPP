@@ -23,7 +23,7 @@ export default class Home extends React.Component{
         } else {
             window.location = "/login"
         }
-
+        this.headerConfig.bind(this)
     }
 
     headerConfig = () => {
@@ -150,7 +150,7 @@ export default class Home extends React.Component{
                         {/* petugas count */}
                         <div className="col-lg-4 col-md-6 col-sm-12 mt-2">
                             <div className="card">
-                                <div className="card-body bg-dark">
+                                <div className="card-body bg-secondary">
                                     <h4 className="text-white">
                                         <strong>Data Petugas</strong>
                                     </h4>
@@ -164,7 +164,7 @@ export default class Home extends React.Component{
                         {/* kelas count */}
                         <div className="col-lg-4 col-md-6 col-sm-12 mt-2">
                             <div className="card">
-                                <div className="card-body bg-secondary">
+                                <div className="card-body bg-dark">
                                     <h4 className="text-white">
                                         <strong>Data Kelas</strong>
                                     </h4>
@@ -178,7 +178,7 @@ export default class Home extends React.Component{
                         {/* siswa count */}
                         <div className="col-lg-4 col-md-6 col-sm-12 mt-2">
                             <div className="card">
-                                <div className="card-body bg-dark">
+                                <div className="card-body bg-secondary">
                                     <h4 className="text-white">
                                         <strong>Data Siswa</strong>
                                     </h4>
@@ -192,7 +192,7 @@ export default class Home extends React.Component{
                         {/* spp count */}
                         <div className="col-lg-4 col-md-6 col-sm-12 mt-2">
                             <div className="card">
-                                <div className="card-body bg-secondary">
+                                <div className="card-body bg-dark">
                                     <h4 className="text-white">
                                         <strong>Data SPP</strong>
                                     </h4>
@@ -206,7 +206,7 @@ export default class Home extends React.Component{
                         {/* transaksi count */}
                         <div className="col-lg-4 col-md-6 col-sm-12 mt-2">
                             <div className="card">
-                                <div className="card-body bg-dark">
+                                <div className="card-body bg-secondary">
                                     <h4 className="text-white">
                                         <strong>Data Transaksi</strong>
                                     </h4>

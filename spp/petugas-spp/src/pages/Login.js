@@ -1,5 +1,4 @@
 import React from "react"
-import Navbar from "../components/Navbar"
 import axios from "axios"
 import { base_url } from "../config";
 
@@ -23,7 +22,7 @@ export default class Login extends React.Component{
             password: this.state.password
         }
 
-        let url = base_url + "/auth/loginadmin"
+        let url = base_url + "/auth/loginpetugas"
         
 
         axios.post(url, sendData)
@@ -48,7 +47,7 @@ export default class Login extends React.Component{
                 <div className="col-sm-6 card my-5">
                     <div className="card-header bg-danger text-white text-center">
                         <h4>Telkom Schools Malang</h4>
-                        <strong className="text-dark">Login Admin</strong>
+                        <strong className="text-dark">Login Petugas</strong>
                     </div>
                     <div className="card-body">
                         { !this.state.logged ? 
@@ -62,7 +61,7 @@ export default class Login extends React.Component{
                             onChange={ev => this.setState({username: ev.target.value})} placeholder="Username"/>
                             <input type="password" className="form-control mb-1" value={this.state.password}
                             onChange={ev => this.setState({password: ev.target.value})}
-                            autoComplete="false" placeholder= "Password"/>
+                            autoComplete="false" placeholder="Password"/>
 
                             <button className="btn btn-block btn-dark mb-1" type="submit">
                                 Sign In

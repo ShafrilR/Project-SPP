@@ -1,5 +1,4 @@
 import React from "react"
-import Navbar from "../components/Navbar"
 import axios from "axios"
 import { base_url } from "../config";
 
@@ -8,8 +7,8 @@ export default class Login extends React.Component{
     constructor(){
         super()
         this.state = {
-            username: "",
-            password: "",
+            nis: "",
+            nama: "",
             message: "",
             logged: true
         }
@@ -19,20 +18,20 @@ export default class Login extends React.Component{
     Login = event => {
         event.preventDefault()
         let sendData = {
-            username: this.state.username,
-            password: this.state.password
+            nis: this.state.nis,
+            nama: this.state.nama
         }
 
-        let url = base_url + "/auth/loginadmin"
+        let url = base_url + "/auth/loginsiswa"
         
 
         axios.post(url, sendData)
         .then(response => {
             this.setState({logged: response.data.logged})
             if (this.state.logged) {
-                let petugas = response.data.data
+                let siswa = response.data.data
                 let token = response.data.token
-                localStorage.setItem("petugas", JSON.stringify(petugas))
+                localStorage.setItem("siswa", JSON.stringify(siswa))
                 localStorage.setItem("token", token)
                 this.props.history.push("/")
             } else {
@@ -48,7 +47,7 @@ export default class Login extends React.Component{
                 <div className="col-sm-6 card my-5">
                     <div className="card-header bg-danger text-white text-center">
                         <h4>Telkom Schools Malang</h4>
-                        <strong className="text-dark">Login Admin</strong>
+                        <strong className="text-dark">Login siswa</strong>
                     </div>
                     <div className="card-body">
                         { !this.state.logged ? 
@@ -58,11 +57,11 @@ export default class Login extends React.Component{
                             </div>
                         ) : null }
                         <form onSubmit={ev => this.Login(ev)}>
-                            <input type="text" className="form-control mb-1" value={this.state.username}
-                            onChange={ev => this.setState({username: ev.target.value})} placeholder="Username"/>
-                            <input type="password" className="form-control mb-1" value={this.state.password}
-                            onChange={ev => this.setState({password: ev.target.value})}
-                            autoComplete="false" placeholder= "Password"/>
+                            <input type="text" className="form-control mb-1" value={this.state.nis}
+                            onChange={ev => this.setState({nis: ev.target.value})} placeholder="NIS"/>
+                            <input type="text" className="form-control mb-1" value={this.state.nama}
+                            onChange={ev => this.setState({nama: ev.target.value})}
+                            autoComplete="false" placeholder="Nama" />
 
                             <button className="btn btn-block btn-dark mb-1" type="submit">
                                 Sign In
