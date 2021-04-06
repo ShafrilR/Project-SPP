@@ -31,6 +31,8 @@ app.get('/',  async (req,res) =>{
     })
 })
 
+
+
 // POST
 app.post('/', verifyToken, async (req, res) => {
     let data = {
@@ -89,6 +91,21 @@ app.delete('/:id_pembayaran', verifyToken, async (req, res) => {
     .then(result => {
         res.json({
             message: 'Data Destroyed',
+            data: result
+        })
+    })
+    .catch(error => {
+        res.json({
+            message: error.message
+        })
+    })
+})
+
+app.get('/:nisn',  async (req,res) =>{
+    let param = { nisn: req.params.nisn }
+    pembayaran.findAll({where:param})
+    .then(result => {
+        res.json({
             data: result
         })
     })

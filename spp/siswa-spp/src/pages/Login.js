@@ -2,7 +2,6 @@ import React from "react"
 import axios from "axios"
 import { base_url } from "../config";
 
-
 export default class Login extends React.Component{
     constructor(){
         super()

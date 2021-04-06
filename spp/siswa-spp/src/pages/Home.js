@@ -24,12 +24,15 @@ export default class Pembayaran extends React.Component{
             id_spp: ""
         }
 
-        if (localStorage.getItem("token id_siswa")) {
+        if (localStorage.getItem("token")) {
             this.state.token = localStorage.getItem("token")
-            this.state.id_siswa = localStorage.getItem("id_siswa")
-        } else {
+        }
+        else if (localStorage.getItem("siswa")) {
+            this.state.nisn = localStorage.getItem("nisn")
+        }  else {
             window.location = "/login"
         }
+        
         this.headerConfig.bind(this)
     }
 
@@ -45,23 +48,19 @@ export default class Pembayaran extends React.Component{
         this.setState({siswaName: siswa.nama})
     }
 
-    dropSpp = selectedItem => {
-        if (window.confirm("are you sure will delete this item?")) {
-            let url = base_url + "/spp/" + selectedItem.id_spp
-            axios.delete(url, this.headerConfig())
-            .then(response => {
-                window.alert(response.data.message)
-                this.getSpp()
-            })
-            .catch(error => console.log(error))
-        }
-    }
+    
+    // getNisn = () => {
+    //     let siswa = JSON.parse(localStorage.getItem('siswa'))
+    //     this.setState({nisn: siswa.nisn})
+    // }
 
     getBayar = () => {
-        let url = base_url + "/pembayaran/" + this.state.id_siswa
+        let siswa = JSON.parse(localStorage.getItem('siswa'))
+        this.setState({nisn: siswa.nisn})
+        let url = base_url + "/pembayaran/" + siswa.nisn
         axios.get(url, this.headerConfig())
         .then(response=> {
-            this.setState({pembayaran: response.data})
+            this.setState({pembayaran: response.data.data})
         })
         .catch(error => {
             if (error.response) {
@@ -78,6 +77,7 @@ export default class Pembayaran extends React.Component{
     componentDidMount(){
         this.getBayar()
         this.getSiswa()
+        // this.getNisn()
     }   
 
     
@@ -89,10 +89,10 @@ export default class Pembayaran extends React.Component{
                 <Navbar />
                 <div className="container">
                 <h3 className="my-2">
-                        <strong>Welcome back, {this.state.siswaName}</strong>
+                        <strong>Selamat Datang, {this.state.siswaName}</strong>
                     </h3>
 
-                   <h3 className="text-bold text-dark mt-2">Data Pembayaran SPP</h3>
+                       <h3 className="text-bold text-dark mt-2">Data Pembayaran SPP anda : </h3>
                    { this.state.pembayaran.map(item => (
                         <BayarList
                         key =  {item.id_pembayaran}
